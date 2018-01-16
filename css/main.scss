@@ -1,0 +1,143 @@
+$menuSizeDefault: 7rem;
+$menuBackgroundColor: #002f30;
+$menuColor: #aaa;
+$menuColorActive: #fff;
+$menusOpensTo: right;
+$rotation: 45deg;
+
+@mixin menuOpening( $menuOpensTo: 'right') {
+
+  @if $menuOpensTo == 'right' {
+    right: $menuSizeDefault; // The default position is right
+
+  } @else if $menuOpensTo == 'left' {
+    left: $menuSizeDefault;
+  }
+}
+
+html {
+  font-size: 62.5%; // 10px
+}
+
+body {
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 2rem;
+  word-wrap: break-word;
+  text-rendering: optimizeLegibility;
+}
+
+.ac-menu {
+  height: $menuSizeDefault;
+  width: 70px;
+  @include menuOpening($menusOpensTo);
+  text-align: center;
+  position: absolute;
+  background: $menuBackgroundColor;
+  overflow: hidden;
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+  z-index: 999;
+  
+  &.active {
+    width: calc(100% - 140px);
+
+    & .ac-menu-content * {
+      opacity: 1;
+    }
+  }
+}
+
+.ac-menu.active span i:nth-child(1) {
+  -webkit-transform: rotate(-$rotation) translate(-50%, -50%);
+          transform: rotate(-$rotation) translate(-50%, -50%);
+  top: 50%;
+}
+
+.ac-menu.active span i:nth-child(2) {
+  -webkit-transform: translateX(-100px);
+          transform: translateX(-100px);
+  opacity: 0;
+}
+
+.ac-menu.active span i:nth-child(3) {
+  -webkit-transform: rotate($rotation) translate(-50%, -50%);
+          transform: rotate($rotation) translate(-50%, -50%);
+  top: 50%;
+}
+
+.ac-menu span {
+  width: $menuSizeDefault;
+  height: $menuSizeDefault;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  z-index: 1;
+
+  & i {
+    position: absolute;
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    width: 45%;
+    height: 2px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #FFFFFF;
+    -webkit-transition: opacity .1s ease .1s, -webkit-transform .3s ease;
+    transition: opacity .1s ease .1s, -webkit-transform .3s ease;
+    transition: transform .3s ease, opacity .1s ease .1s;
+    transition: transform .3s ease, opacity .1s ease .1s, -webkit-transform .3s ease;
+
+    &:nth-child(1) {
+      top: 40%;
+    }
+    &:nth-child(2) {
+      top: 50%;
+    }
+    &:nth-child(3) {
+      top: 60%;
+    }
+  }
+}
+
+.ac-menu .ac-menu-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: $menuSizeDefault;
+  right: 0px;
+  text-align: center;
+}
+
+.ac-menu .ac-menu-content * {
+  opacity: 0;
+}
+
+.ac-menu .ac-menu-content ul,
+.ac-menu .ac-menu-content ul li {
+  margin: 0;
+}
+
+.ac-menu .ac-menu-content ul li {
+  display: inline-block;
+  margin-left: 50px;
+  margin-right: 50px;
+  position: relative;
+}
+
+.ac-menu-link {
+  cursor: pointer;
+  color: $menuColor;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.6rem 1rem;
+  -webkit-transition: all .3s ease .3s;
+  transition: all .3s ease .3s;
+
+  &:hover, &:active, &:focus {
+    color: $menuColorActive;
+    border-bottom: 0.3rem solid $menuColorActive;
+    outline: none;
+  }
+  
+}
